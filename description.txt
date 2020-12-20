@@ -1,0 +1,53 @@
+PART 1: CLASSIFICATION OF ENTITIES
+
+To start I created a variable to store the dataframe in. I made a copy of this,
+and went on to work with the copy.
+
+The first thing I did, was quickly analyse the dataframe. I did this using
+head() and to check if there were any missing values. This gave the insight
+that there were 129 missing values in the 'TAGLINE' column.
+
+Before changing anything in the dataframe, I cleaned the 'LAUNCH DATE' column.
+I removed all the non-numerical values with regex and made al the remaining
+numbers an integer (they were still a string). Right after this, I classified all the
+companies with missing values in TAGLINE as 'unclassified'. I did this because
+without the TAGLINE value, it is hard to say anything about the company.
+
+UNIVERSITIES / SCHOOLS
+I tried to find all the universities and primary and secondary education by
+searching for 'School' in the names of the companies. I chose this manner
+because of the fact that schools often have 'School' in their name and there
+was no efficient way to filter using TAGS or TAGLINE. On purpose I did not
+lowercase the names and used a capital letter S, since the companies in the
+output of 'school' were no universities or a schools.
+
+GOVERNMENT / NON-PROFIT
+To filter out all the non-profit organizations, I used multiple methods. For
+all these methods, I had to lowercase everything in TAGLINE. The first method
+I used, was to search for TAGLINES that contained 'no', any character for
+any number of times, 'profit' and no 'a' directly after 'profit'. In this way
+I collected 'not for profit', 'not-for-profit', 'non profit',  'non-profit'
+and a few other ways to write it. After this I filtered one case out of the
+list by not selecting TAGLINES that contained 'solution'. For the second
+and third method, I did more or less the same thing. For the second I did it
+with 'charity' and for the third I did it with 'foundation'. Again, I removed
+a few cases that did not belong in the list by filtering for specific words.
+
+STARTUPS / MATURE COMPANIES
+After all of the above, I labeled the remaining companies that were founded
+in or after 1990 as a startup and the ones that were founded before 1990
+as a mature company.
+
+PART 2: SCRAPING
+
+For the second part, I set a few options to start with. After that I created
+a function that would scroll down the webpage that I was scraping, until it
+reached the bottom. I used this created function in the next function, which
+was made to extract all the necessary info from the webpage. This second
+function extracted the name of the company, the place where it is located
+and the description of the company. I stored all this info in separated lists.
+
+The list that contained the place of the company, consisted out of other
+lists. Every list in the list was one company. Based on the length of the
+lists, I extracted the city, state and the country and put those in
+separate lists. To end, I created a dataframe of all the lists.
